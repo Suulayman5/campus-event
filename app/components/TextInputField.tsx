@@ -10,7 +10,7 @@ const TextInputField = ({label, onChangeText, password=false}: TextInputFieldPro
   return (
 <View style={styles.container}>
       <Text style={{color: Colors.GRAY}}>{label}</Text>
-      <TextInput placeholder={label} style={styles.textInput} secureTextEntry={password}/>
+      <TextInput placeholder={label} style={styles.textInput} secureTextEntry={password} onChangeText={onChangeText}/>
     </View>
   )
 }

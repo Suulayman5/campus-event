@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         padding: 15,
         backgroundColor: Colors.PRIMARY,
-        marginTop: 15,
+        marginTop: 20,
         borderRadius: 10,
     },
     button: {

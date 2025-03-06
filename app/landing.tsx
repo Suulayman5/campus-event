@@ -21,9 +21,14 @@ const LandingScreen = () => {
             </Text>
             <Button text='Get started' onPress={()=> router.push('/(auth)/SignUp')}/>
             <Pressable onPress={()=> router.push('/(auth)/SignIn')}>
-                <Text style={styles.login}>
-                    Already have an account? Sign In
-                </Text>
+                <View style={styles.view}>
+                    <Text style={styles.login}>
+                        Already have an account? 
+                    </Text>
+                    <Text style={styles.sign}>
+                        Sign In
+                    </Text>
+                </View>
             </Pressable>
         </View>
     </View>
@@ -50,8 +55,19 @@ const styles = StyleSheet.create({
     login: {
         fontSize: 17,
         textAlign: 'center',
-        marginTop: 7,
         color: Colors.GRAY
+    },
+    view: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 20,
+        gap: 5,
+    },
+    sign: {
+        fontSize: 17,
+        textAlign: 'center',
+        color: Colors.PRIMARY
     }
 
 })

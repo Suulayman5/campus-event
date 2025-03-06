@@ -1,10 +1,15 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Colors from '@/data/Colors';
 import TextInputField from '../components/TextInputField';
 import Button from '../components/Button';
 import * as ImagePicker from 'expo-image-picker';
+import { create } from 'react-test-renderer';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/configs/firebase';
+import { cld, options } from '@/configs/cloudinary';
+import { upload } from 'cloudinary-react-native';
 
 
 const SignUp = () => {
@@ -28,6 +33,32 @@ const SignUp = () => {
             setProfileImage(result.assets[0].uri);
         }
       };
+      const handleSignUp = async () => {
+        if (!fullName || !email || !password) {
+          ToastAndroid.show('Please fill all fields', ToastAndroid.BOTTOM);
+          return;
+            
+        }
+        createUserWithEmailAndPassword(auth, email, password)
+        .then(async (userCredential) => {
+            console.log(userCredential);
+            
+            // upload image to cloudinary
+    
+            await upload(cld, {file: profileImage, options: options, callback:async(error:any, response:any) => {
+                if (error) {
+                    console.log(error);
+                }
+                if (response) {
+                    console.log(response?.url);
+                }
+            }})
+        }).catch((error) => {
+            const errorMsg = error?.message;
+            ToastAndroid.show(errorMsg, ToastAndroid.BOTTOM);
+        }
+      )}
+
   return (
     <View style={styles.container}>
       <Text style={styles.account}>Create New Account</Text>
@@ -50,7 +81,7 @@ const SignUp = () => {
         <TextInputField label='Full Name' onChangeText={(v)=>setFullName(v)}/>
         <TextInputField label='Campus Email' onChangeText={(v)=>setEmail(v)}/>
         <TextInputField label='Password' password onChangeText={(v)=>setPassword(v)}/>
-        <Button text='Sign Up' onPress={()=>console.log}/>
+        <Button text='Sign Up' onPress={handleSignUp}/>
     </View>
   )
 }
