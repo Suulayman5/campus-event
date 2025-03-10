@@ -50,7 +50,7 @@ const SignUp = () => {
                     console.log(error);
                 }
                 if (response) {
-                    console.log(response?.url);
+                    console.log(response.url);
                 }
             }})
         }).catch((error) => {
